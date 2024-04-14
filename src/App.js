@@ -1,35 +1,18 @@
-import "./App.css";
+import "../src/styles/layout.css";
 import Header from "./components/Header";
+import Nav from "./components/Nav.js";
 import Main from "./components/Main";
 import Footer from "./components/Footer";
+import Layout from "./components/Layout.js";
 
 function App() {
     return (
-        <>
-            <Header>
-                <nav>
-                    <h1>Little Lemon</h1>
-                </nav>
-            </Header>
-
-            <Main>
-                <section>
-                    <h2>Hero</h2>
-                </section>
-                <section>
-                    <h2>Highlights</h2>
-                </section>
-                <section>
-                    <h2>Testimonials</h2>
-                </section>
-                <section>
-                    <h2>About</h2>
-                </section>
-            </Main>
-            <Footer>
-                <h2>Footer</h2>
-            </Footer>
-        </>
+        <Layout>
+            <Header />
+            <Nav />
+            <Main />
+            <Footer />
+        </Layout>
     );
 }
 
