@@ -1,14 +1,18 @@
 import "./App.css";
+import Header from "./components/Header";
+import Main from "./components/Main";
+import Footer from "./components/Footer";
 
 function App() {
     return (
         <>
-            <header>
+            <Header>
                 <nav>
                     <h1>Little Lemon</h1>
                 </nav>
-            </header>
-            <main>
+            </Header>
+
+            <Main>
                 <section>
                     <h2>Hero</h2>
                 </section>
@@ -21,10 +25,10 @@ function App() {
                 <section>
                     <h2>About</h2>
                 </section>
-            </main>
-            <footer>
+            </Main>
+            <Footer>
                 <h2>Footer</h2>
-            </footer>
+            </Footer>
         </>
     );
 }
