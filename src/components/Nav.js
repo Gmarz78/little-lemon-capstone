@@ -1,27 +1,31 @@
+import headerLogo from "../assets/Logo .svg";
 function Nav() {
     return (
-        <nav className="nav-bar">
-            <ul className="nav-items">
-                <li>
-                    <a href="#">Home</a>
-                </li>
-                <li>
-                    <a href="#about">About</a>
-                </li>
-                <li>
-                    <a href="#">Menu</a>
-                </li>
-                <li>
-                    <a href="#">Reservations</a>
-                </li>
-                <li>
-                    <a href="#">Order online</a>
-                </li>
-                <li>
-                    <a href="#">Login</a>
-                </li>
-            </ul>
-        </nav>
+        <>
+            <nav className="nav-bar">
+                <img className="nav-logo" src={headerLogo} alt="Little Lemon logo"></img>
+                <ul className="nav-items">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#about">About</a>
+                    </li>
+                    <li>
+                        <a href="#">Menu</a>
+                    </li>
+                    <li>
+                        <a href="#">Reservations</a>
+                    </li>
+                    <li>
+                        <a href="#">Order online</a>
+                    </li>
+                    <li>
+                        <a href="#">Login</a>
+                    </li>
+                </ul>
+            </nav>
+        </>
     );
 }
 
