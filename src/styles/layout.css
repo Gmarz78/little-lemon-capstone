@@ -16,30 +16,30 @@ a {
     flex-direction: column;
 }
 
-/* Nav section ======================================================================================================== */
-
-.nav-bar {
-    display: flex;
-    flex-direction: row;
+/* Header & Nav section ======================================================================================================== */
+.header {
+    display: grid;
+    grid-template-areas: "logo ... nav";
     width: 80vw;
     margin: auto;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 0px;
+    height: 10vh;
 }
 
-.nav-bar ul {
-    display: flex;
-    flex-direction: row;
+.nav-bar {
+    grid-area: nav;
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    justify-items: right;
     align-items: center;
 }
-.nav-bar ul li {
-    margin-left: 1.5em;
-}
-.nav-bar ul li a {
+.nav-bar a {
+    color: #333;
     font-weight: 500;
 }
-
+.nav-logo {
+    grid-area: logo;
+    align-self: center;
+}
 /* Hero section ===========================================================================================================*/
 .blurb-article {
     width: 30vw;
@@ -51,8 +51,10 @@ a {
     min-height: 40vh;
     color: #fff;
     padding-top: 40px;
+    margin-bottom: 80px;
 }
 .hero-content-section {
+    position: relative;
     display: flex;
     width: 80vw;
     margin: auto;
@@ -76,9 +78,9 @@ a {
 
 .hero-image-container {
     position: absolute;
-    right: 20vw;
-    width: 25%;
-    height: 45%;
+    right: 0;
+    height: 45vh;
+    aspect-ratio: 3.8 / 4;
     margin-top: 20px;
     border-radius: 16px;
     overflow: hidden;
@@ -88,6 +90,118 @@ a {
     height: 100%;
     object-fit: cover;
     border-radius: 16px;
+}
+.blurb-article {
+    min-width: 40%;
+}
+/* Highlights section ======================================================================================================== */
+.highlights-section {
+    display: grid;
+    grid-template-areas:
+        "title ... button"
+        "cards cards cards";
+    width: 80vw;
+    margin: 5vh auto;
+    grid-row-gap: 5vh;
+}
+#highlights-title {
+    grid-area: title;
+}
+
+.card-container {
+    grid-area: cards;
+    display: grid;
+    gap: 5vw;
+    grid-template-columns: repeat(3, auto);
+    justify-items: space-between;
+    align-items: start;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #edefee;
+    border-radius: 16px 16px 0px 0px;
+    border: 1px solid #bbb;
+}
+.title-price {
+    display: flex;
+    justify-content: space-between;
+}
+.delivery {
+    display: flex;
+    justify-content: space-between;
+}
+.delivery-image {
+    height: 2rem;
+}
+.price-text {
+    color: #ee9972;
+}
+.card-image {
+    border-radius: 16px 16px 0px 0px;
+}
+.card > *:not(img) {
+    padding: 20px;
+    justify-content: space-between;
+}
+/* Testimonials section ======================================================================================================== */
+
+.testimonials-section {
+    background: #333;
+    width: 100%;
+    padding: 5vh 0vw;
+}
+.testimonials-content {
+    display: grid;
+    grid-template-areas:
+        "testimonial-title-area ..."
+        "testimonial-cards-area testimonial-cards-area";
+    width: 80vw;
+    margin: 5vh auto;
+    grid-row-gap: 5vh;
+}
+.testimonials-title {
+    grid-area: testimonial-title-area;
+    color: #fff;
+}
+
+.testimonial-card-container {
+    width: 80vw;
+    margin: auto;
+    grid-area: testimonial-cards-area;
+    display: grid;
+    gap: 2vw;
+    grid-template-columns: repeat(4, auto);
+}
+.testimonial-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    background: #edefee;
+    border-radius: 16px;
+    border: 1px solid #bbb;
+    padding: 20px;
+}
+.testimonial-card p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.review-stars {
+    display: inline-flex;
+}
+
+.testimonial-profile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.testimonial-card-image {
+    width: 40%;
+    aspect-ratio: 1/1;
+    border-radius: 16px;
+    object-fit: cover;
 }
 
 /* Footer section ======================================================================================================== */
@@ -99,6 +213,14 @@ a {
     justify-content: space-between;
     grid-template-columns: auto auto auto auto;
     align-items: start;
+}
+.footer a {
+    color: #333;
+    font-weight: 500;
+}
+.footer li {
+    color: #333;
+    font-weight: 500;
 }
 .footer div {
     padding: 0px;
