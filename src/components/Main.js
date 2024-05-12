@@ -2,6 +2,10 @@ import heroImage from "../assets/restauranfood.jpg";
 import greekSaladImage from "../assets/greek salad.jpg";
 import bruschettaImage from "../assets/bruchetta.jpg";
 import lemonDessertImage from "../assets/lemon dessert.jpg";
+import testimonial1Image from "../assets/testimonial_1.jpg";
+import testimonial2Image from "../assets/testimonial_2.jpg";
+import testimonial3Image from "../assets/testimonial_3.jpg";
+import testimonial4Image from "../assets/testimonial_4.jpg";
 
 import deliveryImage from "../assets/deliverybike.png";
 function Main() {
@@ -85,12 +89,12 @@ function Main() {
                                 <p>&#11088;</p>
                             </div>
                             <div className="testimonial-profile">
-                                <img className="testimonial-card-image" src={lemonDessertImage} alt="Lemon Dessert"></img>
+                                <img className="testimonial-card-image" src={testimonial1Image} alt="Lemon Dessert"></img>
                                 <h2>Reviewer 1</h2>
                             </div>
                             <p className="review-text">
-                                Eum ducimus maxime et accusamus laudantium et fugiat voluptatibus 33 odio dolores aut enim sequi et officiis quos quo eaque
-                                tempora. Qui dolore amet nam voluptas sunt et nobis ipsum in error fugit rem rerum tempore aut velit dignissimos.
+                                Review - Eum ducimus maxime et accusamus laudantium et fugiat voluptatibus 33 odio dolores aut enim sequi et officiis quos quo
+                                eaque tempora. Qui dolore amet nam voluptas sunt et nobis ipsum in error fugit rem rerum tempore aut velit dignissimos.
                             </p>
                         </div>
                         <div className="testimonial-card">
@@ -102,12 +106,12 @@ function Main() {
                                 <p>&#11088;</p>
                             </div>
                             <div className="testimonial-profile">
-                                <img className="testimonial-card-image" src={lemonDessertImage} alt="Lemon Dessert"></img>
-                                <h2>Reviewer 1</h2>
+                                <img className="testimonial-card-image" src={testimonial2Image} alt="Lemon Dessert"></img>
+                                <h2>Reviewer 2</h2>
                             </div>
                             <p className="review-text">
-                                Eum ducimus maxime et accusamus laudantium et fugiat voluptatibus 33 odio dolores aut enim sequi et officiis quos quo eaque
-                                tempora. Qui dolore amet nam voluptas sunt et nobis ipsum in error fugit rem rerum tempore aut velit dignissimos.
+                                Review - Eum ducimus maxime et accusamus laudantium et fugiat voluptatibus 33 odio dolores aut enim sequi et officiis quos quo
+                                eaque tempora. Qui dolore amet nam voluptas sunt et nobis ipsum in error fugit rem rerum tempore aut velit dignissimos.
                             </p>
                         </div>
                         <div className="testimonial-card">
@@ -118,12 +122,12 @@ function Main() {
                                 <p>&#11088;</p>
                             </div>
                             <div className="testimonial-profile">
-                                <img className="testimonial-card-image" src={lemonDessertImage} alt="Lemon Dessert"></img>
-                                <h2>Reviewer 1</h2>
+                                <img className="testimonial-card-image" src={testimonial3Image} alt="Lemon Dessert"></img>
+                                <h2>Reviewer 3</h2>
                             </div>
                             <p className="review-text">
-                                Eum ducimus maxime et accusamus laudantium et fugiat voluptatibus 33 odio dolores aut enim sequi et officiis quos quo eaque
-                                tempora. Qui dolore amet nam voluptas sunt et nobis ipsum in error fugit rem rerum tempore aut velit dignissimos.
+                                Review - Eum ducimus maxime et accusamus laudantium et fugiat voluptatibus 33 odio dolores aut enim sequi et officiis quos quo
+                                eaque tempora. Qui dolore amet nam voluptas sunt et nobis ipsum in error fugit rem rerum tempore aut velit dignissimos.
                             </p>
                         </div>
                         <div className="testimonial-card">
@@ -133,12 +137,12 @@ function Main() {
                                 <p>&#11088;</p>
                             </div>
                             <div className="testimonial-profile">
-                                <img className="testimonial-card-image" src={lemonDessertImage} alt="Lemon Dessert"></img>
-                                <h2>Reviewer 1</h2>
+                                <img className="testimonial-card-image" src={testimonial4Image} alt="Lemon Dessert"></img>
+                                <h2>Reviewer 4</h2>
                             </div>
                             <p className="review-text">
-                                Eum ducimus maxime et accusamus laudantium et fugiat voluptatibus 33 odio dolores aut enim sequi et officiis quos quo eaque
-                                tempora. Qui dolore amet nam voluptas sunt et nobis ipsum in error fugit rem rerum tempore aut velit dignissimos.
+                                Review - Eum ducimus maxime et accusamus laudantium et fugiat voluptatibus 33 odio dolores aut enim sequi et officiis quos quo
+                                eaque tempora. Qui dolore amet nam voluptas sunt et nobis ipsum in error fugit rem rerum tempore aut velit dignissimos.
                             </p>
                         </div>
                     </div>
