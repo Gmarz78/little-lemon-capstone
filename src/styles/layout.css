@@ -8,6 +8,7 @@
 
 body {
     height: 100%;
+    overflow-y: scroll; /*Force vertical scrollbar*/
 }
 ul {
     list-style-type: none;
@@ -20,40 +21,15 @@ a {
     flex-direction: column;
 }
 
-/* Header & Nav section ======================================================================================================== */
-.header {
-    display: grid;
-    grid-template-areas: "logo ... nav";
-    width: 80%;
-    margin: auto;
-    max-height: 20vmin;
-    min-height: 120px;
-}
-
-.nav-bar {
-    grid-area: nav;
-    display: grid;
-    grid-template-columns: repeat(6, auto);
-    justify-items: right;
-    align-items: center;
-}
-.nav-bar a {
-    color: #333;
-    font-weight: 500;
-}
-.nav-logo {
-    grid-area: logo;
-    align-self: center;
-}
 /* Hero section ===========================================================================================================*/
 .blurb-article {
-    width: 30vw;
+    width: 30%;
 }
 
 .hero-section {
     background: #495e57;
     width: 100%;
-    min-height: 40vh;
+    min-height: 40%;
     color: #fff;
     padding-top: 40px;
     margin-bottom: 80px;
@@ -61,9 +37,9 @@ a {
 .hero-content-section {
     position: relative;
     display: flex;
-    width: 80%;
+    width: 80vw;
     margin: auto;
-    padding-bottom: 30px;
+    padding-bottom: 10%;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
@@ -85,7 +61,7 @@ a {
 .hero-image-container {
     position: absolute;
     right: 0;
-    height: 45vh;
+    height: 100%;
     aspect-ratio: 3.8 / 4;
     margin-top: 20px;
     border-radius: 16px;
@@ -106,9 +82,10 @@ a {
     grid-template-areas:
         "title ... button"
         "cards cards cards";
-    width: 80%;
-    margin: 10vh auto;
-    grid-row-gap: 5vh;
+    width: 80vw;
+    margin: 2% auto;
+    padding-bottom: 2%;
+    gap: 5%;
 }
 #highlights-title {
     grid-area: title;
@@ -117,10 +94,9 @@ a {
 .card-container {
     grid-area: cards;
     display: grid;
-    gap: 5vw;
     grid-template-columns: repeat(3, auto);
-    justify-items: space-between;
-    align-items: start;
+    gap: 15%;
+    align-items: center;
 }
 .card {
     display: flex;
@@ -155,8 +131,8 @@ a {
 
 .testimonials-section {
     background: #333;
-    width: 100%;
-    padding: 5vh 0vw;
+    width: 100vw;
+    padding: 2% 0%;
 }
 .testimonials-content {
     display: grid;
@@ -164,8 +140,8 @@ a {
         "testimonial-title-area ..."
         "testimonial-cards-area testimonial-cards-area";
     width: 80%;
-    margin: 5vh auto;
-    grid-row-gap: 5vh;
+    margin: 2% auto;
+    grid-row-gap: 5%;
 }
 .testimonials-title {
     grid-area: testimonial-title-area;
@@ -216,10 +192,63 @@ a {
     object-fit: cover;
 }
 
+/* About section ========================================================================================================= */
+
+.about-section {
+    background: #edefee;
+    width: 100vw;
+    min-height: 40%;
+    color: #fff;
+    padding-top: 40px;
+    margin-bottom: 80px;
+}
+.about-content-section {
+    position: relative;
+    display: flex;
+    width: 80%;
+    margin: auto;
+    padding-bottom: 10%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.about-content-section h1 {
+    font-family: "Markazi Text", serif;
+    font-size: 48pt;
+    color: #333;
+}
+.about-content-section h3 {
+    font-family: "Markazi Text", serif;
+    font-size: 24px;
+    color: #333;
+}
+.about-content-section p {
+    color: #333;
+}
+
+.about-image-container {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    aspect-ratio: 3.8 / 4;
+    margin-top: 20px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+.about-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+.blurb-article {
+    min-width: 40%;
+}
+
 /* Footer section ======================================================================================================== */
 
 .footer {
-    width: 80%;
+    width: 80vw;
     margin: auto;
     display: grid;
     justify-content: space-between;
@@ -248,4 +277,83 @@ a {
 }
 .footer-logo {
     height: 60px;
+}
+
+/* FORM=================================================================================== */
+
+.form {
+    width: 80vw;
+    margin: 20px auto 20px auto;
+    background: #495e57;
+}
+
+fieldset {
+    display: flex;
+    width: 480px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+sup {
+    color: red;
+    top: -2px;
+    font-size: 95%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+input,
+select {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    height: 32px;
+    padding: 0 8px;
+}
+
+.Field {
+    position: relative;
+    padding-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.FieldError {
+    position: absolute;
+    bottom: -6px;
+    color: red;
+    font-size: 12px;
+}
+
+.Row {
+    display: flex;
+    flex-direction: row;
+}
+
+button {
+    padding: 12px;
+    width: 240px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: darkblue;
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:disabled,
+button[disabled] {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
 }
