@@ -1,7 +1,5 @@
 import headerLogo from "../assets/Logo.svg";
 import "../styles/layout.css";
-// import Main from "./Main";
-// import Booking from "./Booking.js";
 import { Link } from "react-router-dom";
 
 function Header() {
