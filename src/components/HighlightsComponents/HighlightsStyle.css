@@ -1,0 +1,73 @@
+/* Highlights section ======================================================================================================== */
+.highlights-section {
+    display: grid;
+    grid-template-areas:
+        "title ... button-area"
+        "cards cards cards";
+
+    width: 80lvw;
+    margin: 2% auto;
+    padding: 2% 0;
+    height: 70vh;
+    gap: 5%;
+}
+#highlights-title {
+    grid-area: title;
+}
+
+#highlights-menu-button {
+    grid-area: button-area;
+}
+#highlights-menu-button:hover {
+    background: #495e57;
+    color: #fff;
+}
+
+.card-container {
+    grid-area: cards;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 5%;
+    align-items: space-between;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    background: #edefee;
+    border-radius: 16px 16px 4px 4px;
+    border: 1px solid #bbb;
+    box-shadow: 2px 8px 16px #616578;
+}
+.card-text {
+    width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    line-height: 1.5;
+    max-height: calc(1.5em * 3);
+}
+.title-price {
+    display: flex;
+    justify-content: space-between;
+}
+
+.delivery-image {
+    height: 2rem;
+    margin-left: 10px;
+}
+#price-text {
+    color: #ee9972;
+}
+.card-image {
+    border-radius: 16px 16px 0px 0px;
+}
+.card > *:not(img) {
+    padding: 20px;
+}
+.delivery {
+    display: flex;
+}

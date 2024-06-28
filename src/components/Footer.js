@@ -1,4 +1,6 @@
-import footerLogo from "../assets/Logo.svg";
+import footerLogo from "../assets/footer-logo.png";
+import { Link } from "react-router-dom";
+
 function Footer() {
     return (
         <footer className="footer">
@@ -7,11 +9,17 @@ function Footer() {
                 <h3>Doormat Navigation</h3>
                 <ul className="footer-links">
                     <li>
-                        <a href="#">Home</a>
+                        {" "}
+                        <Link to="/" className="nav-item">
+                            Homepage
+                        </Link>
                     </li>
                     <li>
-                        <a href="#about">About</a>
+                        <Link to="/booking" className="nav-item">
+                            Booking
+                        </Link>
                     </li>
+
                     <li>
                         <a href="#">Menu</a>
                     </li>

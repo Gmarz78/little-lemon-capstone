@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import { useState, useReducer } from "react";
-import Header from "./components/Header";
+import { useReducer } from "react";
+import Header from "./components/HeaderComponents/Header.js";
 import Footer from "./components/Footer";
 import Layout from "./components/Layout.js";
 import Main from "./components/Main";
-import BookingForm from "./components/BookingForm.js";
-import HeaderLayout from "./components/HeaderLayout.js";
+import BookingForm from "./components/BookingComponents/BookingForm.js";
+import HeaderLayout from "./components/HeaderComponents/HeaderLayout.js";
 
 const updateTimes = (state, action) => {
     switch (action.type) {
