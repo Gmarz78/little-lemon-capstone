@@ -1,6 +1,6 @@
-import Hero from "./Hero.js";
-import Highlights from "./Highlights.js";
-import Testimonials from "./Testimonials.js";
+import Hero from "./HeroComponents/Hero.js";
+import Highlights from "./HighlightsComponents/Highlights.js";
+import Testimonials from "./TestimonialsComponents/Testimonials.js";
 import About from "./About.js";
 import "../styles/layout.css";
 

@@ -1,0 +1,68 @@
+/* Hero section ===========================================================================================================*/
+.blurb-article {
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-section {
+    background: #495e57;
+    width: 100%;
+    min-height: 20vh;
+    color: #fff;
+    padding-top: 40px;
+    margin-bottom: 80px;
+}
+.hero-content-section {
+    position: relative;
+    display: flex;
+    max-width: 1600px;
+    margin: auto;
+    padding-bottom: 10%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    min-height: 30vh;
+}
+.hero-content-section h1 {
+    font-family: "Markazi Text", serif;
+    color: #f4ce14;
+}
+.hero-content-section h3 {
+    font-family: "Markazi Text", serif;
+    font-size: 24px;
+    color: #fff;
+}
+.hero-content-section p {
+    color: #fff;
+    margin-bottom: 5vh;
+}
+
+.home-button {
+    width: 160px;
+    height: 3em;
+}
+
+#hero-reserve-button:hover {
+    background: #fff;
+    color: #495e57;
+}
+
+.hero-image-container {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    aspect-ratio: 3.8 / 4;
+    margin-top: 20px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 2px 8px 16px #616578;
+}
+.hero-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+.blurb-article {
+    min-width: 40%;
+}
