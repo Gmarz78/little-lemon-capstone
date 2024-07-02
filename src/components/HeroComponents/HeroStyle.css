@@ -7,7 +7,7 @@
 .hero-section {
     background: #495e57;
     width: 100%;
-    min-height: 30vh;
+    min-height: 20vh;
     color: #fff;
     padding-top: 40px;
     margin-bottom: 80px;
@@ -15,7 +15,7 @@
 .hero-content-section {
     position: relative;
     display: flex;
-    width: 80vw;
+    max-width: 1600px;
     margin: auto;
     padding-bottom: 10%;
     flex-direction: row;

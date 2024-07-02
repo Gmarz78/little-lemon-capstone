@@ -10,13 +10,12 @@ function Hero() {
                     <h1 className="sub-title">Little Lemon</h1>
                     <h3>Chicago</h3>
                     <p>We are a family owned mediterranean restaurant, focused on traditional recipes served with a modern twist.</p>
-                    {/* <div className="hero-Button" id="hero-reserve-button"> */}
+
                     <Link to="/booking">
                         <button type="button" className="home-button" id="hero-reserve-button">
                             Reserve a table
                         </button>
                     </Link>
-                    {/* </div> */}
                 </div>
 
                 <div className="hero-image-container">

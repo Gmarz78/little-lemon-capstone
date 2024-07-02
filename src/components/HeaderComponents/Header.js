@@ -1,12 +1,5 @@
-import headerLogo from "./HeaderAssets/Logo.svg";
+import headerLogo from "./HeaderAssets/headerLogo.png";
 import { Link } from "react-router-dom";
-
-// const scrollToSection = (id) => {
-//     const element = document.getElementById(id);
-//     if (element) {
-//         element.scrollIntoView({ behavior: "smooth" });
-//     }
-// };
 
 function Header() {
     return (

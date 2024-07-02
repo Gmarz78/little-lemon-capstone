@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { validateEmail } from "../utils";
+import { validateEmail, validatePhoneNumber } from "../utils";
+import { useNavigate } from "react-router-dom";
+import { fetchAPI } from "../../API";
 import "./bookingStyle.css";
 
-function ReservationForm({ availableTimes, dispatch }) {
+function BookingForm({ availableTimes, dispatch, submitForm }) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -12,9 +14,12 @@ function ReservationForm({ availableTimes, dispatch }) {
     const [guests, setGuests] = useState("");
     const [occasion, setOccasion] = useState("");
 
-    const getIsFormValid = () => {
-        return firstName && lastName.length >= 1 && firstName.length >= 1 && date && guests > 0 && validateEmail(email);
-    };
+    const [dateValid, setDateValid] = useState(false);
+    const [guestsValid, setGuestsValid] = useState(false);
+    const [firstNameValid, setFirstNameValid] = useState(false);
+    const [lastNameValid, setLastNameValid] = useState(false);
+    const [emailValid, setEmailValid] = useState(false);
+    const [telNoValid, setTelNolValid] = useState(false);
 
     const clearForm = () => {
         setFirstName("");
@@ -23,14 +28,55 @@ function ReservationForm({ availableTimes, dispatch }) {
         setTelNo("");
         setDate("");
         setTime("");
-        setGuests("");
-        setOccasion("");
+        setGuests(0);
+        setOccasion("None");
     };
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+
+    const getIsFormValid = () => {
+        return firstNameValid && lastName.length >= 1 && dateValid && guests > 0 && guests <= 20 && emailValid && telNoValid;
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert("Reservation confirmed!");
-        clearForm();
+        const formData = {
+            firstName,
+            lastName,
+            email,
+            telNo,
+            date,
+            time,
+            guests,
+            occasion,
+        };
+
+        const success = await submitForm(formData);
+        if (success) {
+            const storedData = JSON.parse(localStorage.getItem("bookings")) || [];
+            storedData.push(formData);
+            localStorage.setItem("bookings", JSON.stringify(storedData));
+            navigate("/confirmed", { state: { booking: formData } });
+            clearForm();
+        } else {
+            console.error("Form submission failed");
+        }
+    };
+    // Function to fetch new times when date changes
+    const handleDateChange = async (e) => {
+        const selectedDate = new Date(e.target.value);
+        setDate(selectedDate.toISOString().split("T")[0]);
+        setDateValid(true);
+        if (dispatch) {
+            try {
+                const response = await fetchAPI(selectedDate);
+                dispatch({ type: "change_date", payload: response });
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        } else {
+            console.error("dispatch function is not available");
+        }
     };
 
     return (
@@ -52,15 +98,13 @@ function ReservationForm({ availableTimes, dispatch }) {
                                 <label htmlFor="res-date">
                                     Choose date<sup>*</sup>
                                 </label>
-                                {/* <input type="date" value={date} onChange={(e) => setDate(e.target.value)} id="res-date" /> */}
+
                                 <input
                                     type="date"
                                     value={date}
-                                    onChange={(e) => {
-                                        setDate(e.target.value);
-                                        if (dispatch) dispatch({ type: "change_date", payload: e.target.value });
-                                    }}
+                                    onChange={handleDateChange}
                                     id="res-date"
+                                    className={dateValid ? "valid-input" : "invalid-input"}
                                     aria-label="Choose a date"
                                     aria-required="true"
                                 />
@@ -81,13 +125,25 @@ function ReservationForm({ availableTimes, dispatch }) {
                                 <label htmlFor="guests">
                                     Number of guests<sup>*</sup>
                                 </label>
-                                <input type="number" placeholder="0" min="1" max="20" id="guests" value={guests} onChange={(e) => setGuests(e.target.value)} />
+                                <input
+                                    type="number"
+                                    placeholder="0"
+                                    min="1"
+                                    max="20"
+                                    id="guests"
+                                    className={guestsValid ? "valid-input" : "invalid-input"}
+                                    value={guests}
+                                    onChange={(e) => {
+                                        setGuests(e.target.value);
+                                        setGuestsValid(!isNaN(guests) && parseInt(guests) > 0 ? true : false);
+                                    }}
+                                />
                             </div>
                             <div className="Field" id="choose-occasion">
-                                <label htmlFor="occasion">Occasion</label>
+                                <label htmlFor="occasionSelect">Occasion</label>
                                 <select
                                     className="occasion-select"
-                                    id="occasion"
+                                    id="occasionSelect"
                                     value={occasion}
                                     onChange={(e) => setOccasion(e.target.value)}
                                     aria-label="Select occasion or leave for none"
@@ -105,58 +161,82 @@ function ReservationForm({ availableTimes, dispatch }) {
                                 Your details
                             </h3>
                             <div className="Field contact-field" id="first-name">
-                                <label>
+                                <label htmlFor="firstNameInput">
                                     First name <sup>*</sup>
                                 </label>
                                 <input
+                                    id="firstNameInput"
                                     placeholder="First name"
                                     value={firstName}
-                                    onChange={(e) => setFirstName(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        setFirstName(value);
+                                        setFirstNameValid(value.length > 1 ? true : false);
+                                    }}
+                                    className={firstNameValid ? "valid-input" : "invalid-input"}
                                     aria-label="Enter first name"
                                     aria-required="true"
                                 />
                             </div>
                             <div className="Field contact-field" id="last-name">
-                                <label>
+                                <label htmlFor="lastNameInput">
                                     Last name<sup>*</sup>
                                 </label>
                                 <input
+                                    id="lastNameInput"
                                     placeholder="Last name"
                                     value={lastName}
-                                    onChange={(e) => setLastName(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        setLastName(value);
+                                        setLastNameValid(value.length > 1 ? true : false);
+                                    }}
+                                    className={lastNameValid ? "valid-input" : "invalid-input"}
                                     aria-label="Enter last name"
                                     aria-required="true"
                                 />
                             </div>
                             <div className="Field contact-field" id="email">
-                                <label>
+                                <label htmlFor="emailInput">
                                     Email address <sup>*</sup>
                                 </label>
                                 <input
+                                    id="emailInput"
                                     placeholder="Email address"
                                     value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        setEmail(e.target.value);
+                                        setEmailValid(validateEmail(value) ? true : false);
+                                    }}
+                                    className={emailValid ? "valid-input" : "invalid-input"}
                                     aria-label="Enter email address"
                                     aria-required="true"
                                 />
                             </div>
                             <div className="Field contact-field" id="contact-no">
-                                <label>Contact tel</label>
+                                <label htmlFor="telNoInput">
+                                    Contact tel<sup>*</sup>
+                                </label>
                                 <input
+                                    id="telNoInput"
                                     placeholder="Contact tel"
                                     value={telNo}
-                                    onChange={(e) => setTelNo(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        setTelNo(e.target.value);
+                                        setTelNolValid(validatePhoneNumber(value) ? true : false);
+                                    }}
+                                    className={telNoValid ? "valid-input" : "invalid-input"}
                                     aria-label="Enter a contact telephone number"
                                     aria-required="true"
                                 />
                             </div>
                         </section>
 
-                        <div className="submitButton" id="submit-button">
-                            <button type="submit" disabled={!getIsFormValid()}>
-                                Book reservation
-                            </button>
-                        </div>
+                        <button type="submit" className="submitButton" id="submit-button" disabled={!getIsFormValid()}>
+                            Book reservation
+                        </button>
                     </div>
                 </fieldset>
             </form>
@@ -164,4 +244,4 @@ function ReservationForm({ availableTimes, dispatch }) {
     );
 }
 
-export default ReservationForm;
+export default BookingForm;

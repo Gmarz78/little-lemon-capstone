@@ -12,6 +12,7 @@
         "testimonial-title-area"
         "testimonial-cards-area";
     width: 80%;
+    max-width: 1600px;
     margin: 2% auto;
     grid-row-gap: 5%;
 }

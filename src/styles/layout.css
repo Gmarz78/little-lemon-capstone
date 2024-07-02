@@ -57,6 +57,7 @@ p {
     position: relative;
     display: flex;
     width: 80%;
+    max-width: 1600px;
     margin: auto;
     padding-bottom: 10%;
     flex-direction: row;
@@ -100,7 +101,8 @@ p {
 /* Footer section ======================================================================================================== */
 
 .footer {
-    width: 80vw;
+    width: 80%;
+    max-width: 1600px;
     margin: auto;
     display: grid;
     justify-content: space-between;

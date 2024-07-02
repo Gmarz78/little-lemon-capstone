@@ -18,7 +18,7 @@ const highlights = [
         dishImageURL: bruschettaImage,
     },
     {
-        id: 1,
+        id: 2,
         dishName: "Lemon Dessert",
         dishPrice: "£5.00",
         dishImageURL: lemonDessertImage,

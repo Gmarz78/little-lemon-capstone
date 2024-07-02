@@ -6,6 +6,7 @@
         "cards cards cards";
 
     width: 80lvw;
+    max-width: 1600px;
     margin: 2% auto;
     padding: 2% 0;
     height: 70vh;
