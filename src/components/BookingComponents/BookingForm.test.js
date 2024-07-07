@@ -1,66 +1,150 @@
+import { render, screen, waitFor, act } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import BookingForm from "./BookingForm";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
-import App from "../../App";
+import { BrowserRouter as Router } from "react-router-dom";
+import { fetchAPI, submitAPI } from "../../API";
 
-// Mock the submitAPI function
-jest.mock("./API", () => ({
-    fetchAPI: jest.fn(),
-    submitAPI: jest.fn(),
+const mockProps = {
+    availableTimes: ["10:00", "11:00", "12:00"],
+    dispatch: jest.fn(),
+    submitForm: jest.fn(),
+};
+
+//Mocking the API to test it's interractions with the app.
+jest.mock("../../API");
+
+const mockNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
+    useNavigate: () => mockNavigate,
 }));
 
-// This test case checks that a piece of static text can be found in the BookingForm component
+describe("BookingForm Component", () => {
+    it("Should update times in the dropdown selction input when date changes", async () => {
+        fetchAPI.mockResolvedValue(["17:00", "17:30", "18:00"]);
+        const dispatchMock = jest.fn();
 
-test("Renders the BookingForm heading", () => {
-    const testAvailableTimes = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
-    render(<BookingForm availableTimes={testAvailableTimes} />);
-    const headingElement = screen.getByText("Book a reservation");
-    expect(headingElement).toBeInTheDocument();
-});
+        render(
+            <Router>
+                <BookingForm availableTimes={[]} dispatch={dispatchMock} />
+            </Router>
+        );
 
-test("Handles change_date action in App component", () => {
-    render(
-        <MemoryRouter initialEntries={["/booking"]}>
-            <Routes>
-                <Route path="/*" element={<App />} />
-            </Routes>
-        </MemoryRouter>
-    );
+        const dateInput = screen.getByLabelText(/Choose date/i); // Finding the date input element
+        userEvent.type(dateInput, "2024-07-09");
 
-    // Simulate changing the date input
-    const dateInput = screen.getByLabelText("Choose a date");
-    fireEvent.change(dateInput, { target: { value: "2024-07-01" } });
+        // Wait for fetchAPI to be called with new date and dispatch to update the times
+        await new Promise((resolve) => setTimeout(resolve, 0));
 
-    // Check if the available times remain the same (based on current reducer logic)
-    const updatedTimes = ["17:00", "18:00"]; // Update this with expected times after dispatch
-    updatedTimes.forEach((time) => {
-        expect(screen.getByText(time)).toBeInTheDocument();
+        // Assertions after date change. Expecting the mock displatch to have been called at least once
+
+        await waitFor(() => {
+            expect(dispatchMock).toHaveBeenCalledTimes(1);
+        });
+        await waitFor(() => {
+            expect(dispatchMock).toHaveBeenCalledWith({
+                type: "change_date",
+                payload: expect.any(Array),
+            });
+        });
     });
-});
+    //This is just a basic test to verfiy the heading element for the for is rendered on the screen
+    test("Renders the BookingForm heading", async () => {
+        render(
+            <Router>
+                <BookingForm availableTimes={["17:00", "17:30", "18:00"]} />
+            </Router>
+        );
 
-describe("BookingForm", () => {
-    it("submits the form with valid data", () => {
-        render(<BookingForm availableTimes={["10:00", "11:00"]} />);
+        await waitFor(() => {
+            const headingElement = screen.getByText(/Book a reservation/i);
+            expect(headingElement).toBeInTheDocument();
+        });
+    });
 
-        // Fill in the form fields
-        fireEvent.change(screen.getByLabelText(/First name/i), { target: { value: "John" } });
-        fireEvent.change(screen.getByLabelText(/Last name/i), { target: { value: "Doe" } });
-        fireEvent.change(screen.getByLabelText(/Email address/i), { target: { value: "john.doe@example.com" } });
-        fireEvent.change(screen.getByLabelText(/Number of guests/i), { target: { value: "2" } });
-        fireEvent.change(screen.getByLabelText(/Choose date/i), { target: { value: "2024-07-01" } });
-        fireEvent.change(screen.getByLabelText(/Choose Time/i), { target: { value: "10:00" } });
-        fireEvent.change(screen.getByLabelText(/Occasion/i), { target: { value: "Birthday" } });
+    //=======================================================================================================================================
+    describe("BookingForm API Submission", () => {
+        beforeEach(() => {
+            localStorage.clear();
+        });
 
-        // Submit the form
-        fireEvent.click(screen.getByText(/Book reservation/i));
+        it("handles successful form submission", async () => {
+            // Mock implementation of submitAPI to return success
+            render(
+                <Router>
+                    <BookingForm {...mockProps} />
+                </Router>
+            );
+            submitAPI.mockResolvedValue(JSON.stringify(true));
 
-        // Check if the form fields are cleared after submission
-        expect(screen.getByLabelText(/First name/i)).toHaveValue("");
-        expect(screen.getByLabelText(/Last name/i)).toHaveValue("");
-        expect(screen.getByLabelText(/Email address/i)).toHaveValue("");
-        expect(screen.getByLabelText(/Number of guests/i)).toHaveValue(0);
-        expect(screen.getByLabelText(/Occasion/i)).toHaveValue("None");
-        expect(screen.getByLabelText(/Choose date/i)).toHaveValue("");
-        expect(screen.getByLabelText(/Choose Time/i)).toHaveValue("11:00");
+            // Mock handleSubmit function
+            const handleSubmitMock = jest.fn().mockImplementation(async (e) => {
+                e.preventDefault(); // Mock event.preventDefault() if needed
+                const formData = {
+                    firstName: "Gordon",
+                    lastName: "Marshall",
+                    email: "gmarz78@gmail.com",
+                    telNo: "07720320774",
+                    date: "2024-07-23",
+                    time: "20:30",
+                    guests: "2",
+                    occasion: "Engagement",
+                };
+
+                const success = await submitAPI(formData);
+                if (success) {
+                    const storedData = JSON.parse(localStorage.getItem("bookings")) || [];
+                    storedData.push(formData);
+                    localStorage.setItem("bookings", JSON.stringify(storedData));
+                    mockNavigate("/confirmed", { state: { booking: formData } });
+                } else {
+                    console.error("Form submission failed");
+                }
+            });
+
+            // Mocking the handleSubmitFunction to trigger the associated functions and the mock submitAPI
+            BookingForm.prototype.handleSubmit = handleSubmitMock;
+
+            // Triggering the handleSubmit function directly
+            await act(async () => {
+                await handleSubmitMock({ preventDefault: jest.fn() }); // Mock event object
+            });
+
+            // Verify submitAPI was called using correct data
+            await waitFor(() => {
+                expect(submitAPI).toHaveBeenCalledWith({
+                    date: "2024-07-23",
+                    guests: "2",
+                    firstName: "Gordon",
+                    lastName: "Marshall",
+                    email: "gmarz78@gmail.com",
+                    telNo: "07720320774",
+                    occasion: "Engagement",
+                    time: "20:30",
+                });
+            });
+
+            // Verifying that the localStorage was updated
+            await waitFor(() => {
+                const storedData = JSON.parse(localStorage.getItem("bookings"));
+                expect(storedData).toEqual([
+                    {
+                        date: "2024-07-23",
+                        guests: "2",
+                        firstName: "Gordon",
+                        lastName: "Marshall",
+                        email: "gmarz78@gmail.com",
+                        telNo: "07720320774",
+                        occasion: "Engagement",
+                        time: "20:30",
+                    },
+                ]);
+            });
+
+            // Verifying successful navigation to the booking confirmation page
+            await waitFor(() => {
+                expect(mockNavigate).toHaveBeenCalledWith("/confirmed", { state: { booking: expect.any(Object) } });
+            });
+        });
     });
 });

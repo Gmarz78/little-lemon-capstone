@@ -7,7 +7,8 @@ export const validateEmail = (email) => {
 };
 
 export const validatePhoneNumber = (phoneNumber) => {
-    const phoneRegex = /^\+?(\d[\d-.()\s]*){7,}$/;
+    const phoneRegex = /^(\+\d{1,3}[- ]?)?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}$/;
+
     return phoneRegex.test(phoneNumber);
 };
 

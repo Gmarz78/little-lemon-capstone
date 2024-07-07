@@ -12,7 +12,6 @@ function About() {
                 </article>
                 <div className="about-image-container">
                     <img className="about-image-article" src={aboutImage1} alt="Mario and Adrian"></img>
-                    <img className="about-image-article" src={aboutImage2} alt="Mario and Adrian"></img>
                 </div>
             </div>
         </section>

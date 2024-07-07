@@ -1,5 +1,5 @@
 import headerLogo from "./HeaderAssets/headerLogo.png";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function Header() {
     return (
@@ -9,12 +9,12 @@ function Header() {
             </div>
             <>
                 <nav className="nav-bar">
-                    <Link to="/" className="nav-item">
-                        Homepage
-                    </Link>
-                    <Link to="/booking" className="nav-item">
+                    <NavLink to="/" className={({ isActive }) => (isActive ? "nav-item-active" : "nav-item")}>
+                        Home
+                    </NavLink>
+                    <NavLink to="/booking" className={({ isActive }) => (isActive ? "nav-item-active" : "nav-item")}>
                         Booking
-                    </Link>
+                    </NavLink>
                     <a href="#about">About</a>
                     <a href="#">Menu</a>
                     <a href="#">Order online</a>

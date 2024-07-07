@@ -4,7 +4,7 @@
     background: #333;
     width: 100lvw;
     padding: 2% 0;
-    margin: auto;
+    margin: 60px auto;
 }
 .testimonials-content {
     display: grid;
@@ -21,9 +21,15 @@
     width: 100%;
     grid-area: testimonial-cards-area;
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    column-gap: 3%;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3%;
     margin: auto;
+    @media (max-width: 1000px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 600px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 
 .testimonials-title {
