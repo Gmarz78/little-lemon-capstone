@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { validateEmail, validatePhoneNumber } from "../utils";
+import * as utils from "../utils";
 import { useNavigate } from "react-router-dom";
-import { fetchAPI } from "../../API";
+import { fetchAPI, submitAPI } from "../../API";
 import "./bookingStyle.css";
+import OccasionsImage from "./BookingAssets/Champagne.svg";
+import GuestsImage from "./BookingAssets/Guests.svg";
+import DateImage from "./BookingAssets/Date.svg";
+import TimeImage from "./BookingAssets/Time.svg";
 
 function BookingForm({ availableTimes, dispatch, submitForm }) {
     const [firstName, setFirstName] = useState("");
@@ -12,14 +16,15 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [guests, setGuests] = useState("");
-    const [occasion, setOccasion] = useState("");
+    const [occasion, setOccasion] = useState("None");
 
     const [dateValid, setDateValid] = useState(false);
+    const [timeValid, setTimeValid] = useState(false);
     const [guestsValid, setGuestsValid] = useState(false);
     const [firstNameValid, setFirstNameValid] = useState(false);
     const [lastNameValid, setLastNameValid] = useState(false);
     const [emailValid, setEmailValid] = useState(false);
-    const [telNoValid, setTelNolValid] = useState(false);
+    const [telNoValid, setTelNoValid] = useState(false);
 
     const clearForm = () => {
         setFirstName("");
@@ -35,7 +40,7 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
     const navigate = useNavigate();
 
     const getIsFormValid = () => {
-        return firstNameValid && lastName.length >= 1 && dateValid && guests > 0 && guests <= 20 && emailValid && telNoValid;
+        return firstNameValid && lastNameValid && dateValid && timeValid && guestsValid && emailValid && telNoValid;
     };
 
     const handleSubmit = async (e) => {
@@ -51,15 +56,17 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
             occasion,
         };
 
-        const success = await submitForm(formData);
+        const success = await submitAPI(formData);
         if (success) {
             const storedData = JSON.parse(localStorage.getItem("bookings")) || [];
             storedData.push(formData);
             localStorage.setItem("bookings", JSON.stringify(storedData));
             navigate("/confirmed", { state: { booking: formData } });
+            console.log(formData);
             clearForm();
         } else {
             console.error("Form submission failed");
+            console.log("NOT uccessful");
         }
     };
     // Function to fetch new times when date changes
@@ -95,9 +102,12 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                 Reservation details
                             </h3>
                             <div className="Field" id="choose-date">
-                                <label htmlFor="res-date">
-                                    Choose date<sup>*</sup>
-                                </label>
+                                <div className="field-title-icon">
+                                    <label htmlFor="res-date">
+                                        Choose date<sup>*</sup>
+                                    </label>
+                                    <img className="booking-icon" src={DateImage} alt="Calendar icon"></img>
+                                </div>
 
                                 <input
                                     type="date"
@@ -105,15 +115,29 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                     onChange={handleDateChange}
                                     id="res-date"
                                     className={dateValid ? "valid-input" : "invalid-input"}
-                                    aria-label="Choose a date"
                                     aria-required="true"
                                 />
                             </div>
                             <div className="Field" id="choose-time">
-                                <label htmlFor="res-time">
-                                    Choose Time<sup>*</sup>
-                                </label>
-                                <select id="res-time" value={time} onChange={(e) => setTime(e.target.value)} aria-label="Select a time" aria-required="true">
+                                <div className="field-title-icon">
+                                    <label htmlFor="res-time">
+                                        Choose Time<sup>*</sup>
+                                    </label>
+                                    <img className="booking-icon" src={TimeImage} alt="Clock icon"></img>
+                                </div>
+
+                                <select
+                                    id="res-time"
+                                    className={timeValid ? "valid-input" : "invalid-input"}
+                                    value={time}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        setTime(e.target.value);
+                                        setTimeValid(value !== "" ? true : false);
+                                    }}
+                                    aria-label="Select a time"
+                                    aria-required="true">
+                                    <option value="">Select a time</option> {/* Add a default blank option */}
                                     {availableTimes.map((time, index) => (
                                         <option key={index} value={time}>
                                             {time}
@@ -122,9 +146,12 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                 </select>
                             </div>
                             <div className="Field" id="choose-guests">
-                                <label htmlFor="guests">
-                                    Number of guests<sup>*</sup>
-                                </label>
+                                <div className="field-title-icon">
+                                    <label htmlFor="guests">
+                                        No of guests<sup>*</sup>
+                                    </label>
+                                    <img className="booking-icon" src={GuestsImage} alt="Guests icon"></img>
+                                </div>
                                 <input
                                     type="number"
                                     placeholder="0"
@@ -134,13 +161,18 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                     className={guestsValid ? "valid-input" : "invalid-input"}
                                     value={guests}
                                     onChange={(e) => {
-                                        setGuests(e.target.value);
-                                        setGuestsValid(!isNaN(guests) && parseInt(guests) > 0 ? true : false);
+                                        const value = e.target.value;
+                                        setGuests(value);
+                                        setGuestsValid(!isNaN(value) && parseInt(value) > 0 && parseInt(value) <= 20);
                                     }}
                                 />
                             </div>
                             <div className="Field" id="choose-occasion">
-                                <label htmlFor="occasionSelect">Occasion</label>
+                                <div className="field-title-icon">
+                                    <label htmlFor="occasionSelect">Occasion</label>
+                                    <img className="booking-icon" src={OccasionsImage} alt="Champagne glass icon"></img>
+                                </div>
+
                                 <select
                                     className="occasion-select"
                                     id="occasionSelect"
@@ -171,7 +203,7 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                     onChange={(e) => {
                                         const value = e.target.value;
                                         setFirstName(value);
-                                        setFirstNameValid(value.length > 1 ? true : false);
+                                        setFirstNameValid(/^[a-zA-Z-]*$/.test(value) && value.length > 0 ? true : false);
                                     }}
                                     className={firstNameValid ? "valid-input" : "invalid-input"}
                                     aria-label="Enter first name"
@@ -189,7 +221,7 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                     onChange={(e) => {
                                         const value = e.target.value;
                                         setLastName(value);
-                                        setLastNameValid(value.length > 1 ? true : false);
+                                        setLastNameValid(/^[a-zA-Z-]*$/.test(value) && value.length > 1 ? true : false);
                                     }}
                                     className={lastNameValid ? "valid-input" : "invalid-input"}
                                     aria-label="Enter last name"
@@ -207,7 +239,7 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                     onChange={(e) => {
                                         const value = e.target.value;
                                         setEmail(e.target.value);
-                                        setEmailValid(validateEmail(value) ? true : false);
+                                        setEmailValid(utils.validateEmail(value) ? true : false);
                                     }}
                                     className={emailValid ? "valid-input" : "invalid-input"}
                                     aria-label="Enter email address"
@@ -225,7 +257,7 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                     onChange={(e) => {
                                         const value = e.target.value;
                                         setTelNo(e.target.value);
-                                        setTelNolValid(validatePhoneNumber(value) ? true : false);
+                                        setTelNoValid(utils.validatePhoneNumber(value) ? true : false);
                                     }}
                                     className={telNoValid ? "valid-input" : "invalid-input"}
                                     aria-label="Enter a contact telephone number"

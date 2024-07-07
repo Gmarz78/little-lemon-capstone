@@ -4,7 +4,7 @@ const HighlightsCard = ({ data }) => {
     return (
         <>
             {data.map((dish) => (
-                <div className="card" key={data.id}>
+                <div className="card" key={dish.id}>
                     <img className="card-image" src={dish.dishImageURL} alt={dish.dishName} />
 
                     <div className="title-price">

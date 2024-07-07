@@ -5,7 +5,6 @@
     display: flex;
     justify-content: center;
     background: #333;
-
     min-height: 40%;
     padding: 40px;
     margin-bottom: 80px;
@@ -24,13 +23,31 @@
         "date-time-details date-time-details date-time-details"
         "contact-details contact-details contact-details"
         "... ... submit-button-area";
-    width: 50vw;
-    gap: 30px;
-    padding: 40px 10px;
+    width: 80vw;
+    max-width: 1600px;
+    gap: 20px;
+    padding: 40px 5px;
     border-radius: 16px;
     justify-content: space-around;
     background: #fff;
     box-shadow: 6px 12px 20px #1d1e24;
+
+    @media (max-width: 1000px) {
+        grid-template-areas:
+            "form-heading-area ..."
+            "date-time-details date-time-details"
+            "contact-details contact-details"
+            "... submit-button-area";
+    }
+
+    @media (max-width: 600px) {
+        margin: 20px;
+        grid-template-areas:
+            "form-heading-area"
+            "date-time-details"
+            "contact-details"
+            "submit-button-area";
+    }
 }
 .confirmed-section {
     width: 100%;
@@ -54,6 +71,15 @@
     line-height: 1.5;
 }
 
+.confirmed-title-icon {
+    display: flex;
+    width: 50%;
+}
+.booking-confirmed-icon {
+    height: 3em;
+    color: #495e57;
+}
+
 .contact-section {
     border: 1px solid #edefee;
     border-radius: 16px;
@@ -65,6 +91,24 @@
         "contact-section-header-area ... ..."
         "first-name-area ... last-name-area"
         "email-area ... tel-no-area";
+
+    @media (max-width: 1000px) {
+        column-gap: 4%;
+        grid-template-areas:
+            "contact-section-header-area ..."
+            "first-name-area last-name-area"
+            "email-area tel-no-area";
+    }
+
+    @media (max-width: 600px) {
+        margin: 20px 5px;
+        grid-template-areas:
+            "contact-section-header-area"
+            "first-name-area"
+            "last-name-area"
+            "email-area"
+            "tel-no-area";
+    }
 }
 
 .date-time-section {
@@ -72,17 +116,37 @@
     border-radius: 16px;
     padding: 10px 30px 20px 30px;
     display: grid;
-    column-gap: 8%;
+    column-gap: 6%;
     box-shadow: 2px 2px 6px #84868f;
     grid-template-areas:
         "booking-section-header-area ... ... ..."
         "choose-date-area choose-time-area choose-guests-area choose-occasion-area";
+
+    /* Default grid layout for wider screens */
+
+    @media (max-width: 1000px) {
+        column-gap: 4%;
+        grid-template-areas:
+            "booking-section-header-area ..."
+            "choose-date-area choose-time-area"
+            "choose-guests-area choose-occasion-area";
+    }
+
+    @media (max-width: 600px) {
+        margin: 20px 5px;
+        grid-template-areas:
+            "booking-section-header-area"
+            "choose-date-area"
+            "choose-time-area"
+            "choose-guests-area"
+            "choose-occasion-area";
+    }
 }
 
 .booking-section-header {
     margin-bottom: 30px;
-    font-size: 18pt;
-    font-family: "Markazi Text", serif;
+    font-size: 16pt;
+    font-family: "Karla", sans-serif;
     color: #495e57;
 }
 
@@ -148,7 +212,7 @@
 
 fieldset {
     display: flex;
-    width: 480px;
+    width: 500px;
     padding: 16px;
     border: 0px;
     flex-direction: column;
@@ -158,6 +222,16 @@ label {
     margin-bottom: 8px;
     font-size: 14px;
     font-weight: bold;
+    color: #495e57;
+}
+.field-title-icon {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+}
+.booking-icon {
+    height: 1.2em;
     color: #495e57;
 }
 
@@ -191,6 +265,7 @@ input:focus,
 select:focus {
     outline: none;
     background-color: #fff;
+    border: 2px solid #495e57;
 }
 
 .Field {

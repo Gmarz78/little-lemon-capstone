@@ -1,21 +1,31 @@
-// import BookingForm from "../src/components/BookingComponents/BookingForm";
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { render } from "@testing-library/react";
 import App from "./App";
+import { fetchAPI } from "./API";
+import { BrowserRouter as Router } from "react-router-dom";
 
-test("Initializes times correctly in App component", () => {
-    render(
-        <MemoryRouter initialEntries={["/booking"]}>
-            <Routes>
-                <Route path="/*" element={<App />} />
-            </Routes>
-        </MemoryRouter>
-    );
+jest.mock("./API", () => ({
+    fetchAPI: jest.fn(),
+}));
 
-    const initialAvailableTimes = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
+describe("App Component", () => {
+    beforeEach(() => {
+        fetchAPI.mockClear();
+    });
 
-    // Check if the initial available times are rendered in the BookingForm
-    initialAvailableTimes.forEach((time) => {
-        expect(screen.getByText(time)).toBeInTheDocument();
+    it("should initialize times on mount", async () => {
+        // Mocking the fetchAPI to return initial times
+        fetchAPI.mockResolvedValue(["17:00", "17:30", "18:00"]);
+
+        render(
+            <Router>
+                <App />
+            </Router>
+        );
+        // Wait for the component to fetch and update initial times
+        await new Promise((resolve) => setTimeout(resolve, 0));
+
+        // Assertions after the times have been initialized
+        expect(fetchAPI).toHaveBeenCalledTimes(1);
+        expect(fetchAPI).toHaveBeenCalledWith(expect.any(Date));
     });
 });

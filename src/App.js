@@ -21,24 +21,6 @@ const updateTimes = (state, action) => {
     }
 };
 
-// submitForm function
-const submitForm = async (formData) => {
-    try {
-        const response = await submitAPI(formData);
-        const result = JSON.parse(response);
-        if (result === true) {
-            console.log("Form submission successful");
-            return true;
-        } else {
-            console.error("Form submission failed");
-            return false;
-        }
-    } catch (error) {
-        console.error("Error during form submission:", error);
-        return false;
-    }
-};
-
 function App() {
     const [state, dispatch] = useReducer(updateTimes, initialState);
     useEffect(() => {
@@ -54,6 +36,23 @@ function App() {
 
         initializeTimes();
     }, []);
+    // submitForm function
+    const submitForm = async (formData) => {
+        try {
+            const response = await submitAPI(formData);
+            const result = JSON.parse(response);
+            if (result === true) {
+                console.log("Form submission successful");
+                return true;
+            } else {
+                console.error("Form submission failed");
+                return false;
+            }
+        } catch (error) {
+            console.error("Error during form submission:", error);
+            return false;
+        }
+    };
 
     return (
         <>

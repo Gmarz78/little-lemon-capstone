@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { formatDate, formatTime } from "../utils";
+import CelebrateImage from "./BookingAssets/Confetti.svg";
 import "./bookingStyle.css";
 
 function ConfirmedBooking() {
@@ -9,9 +10,13 @@ function ConfirmedBooking() {
     return (
         <div className="form-section">
             <div className="confirmed-booking">
-                <h2 className="confirmed-section" id="confirmed-title-id">
-                    Success! your booking is confirmed!
-                </h2>
+                <div className="confirmed-title-icon">
+                    <h2 className="confirmed-section" id="confirmed-title-id">
+                        Success! Your booking is confirmed!
+                    </h2>
+                    <img className="booking-confirmed-icon" src={CelebrateImage} alt="Confetti"></img>
+                </div>
+
                 {booking ? (
                     <>
                         <div className="confirmed-section" id="full-name-id">
