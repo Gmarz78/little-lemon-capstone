@@ -1,9 +1,9 @@
-import aboutImage1 from "../assets/Mario and Adrian A.jpg";
-import aboutImage2 from "../assets/Mario and Adrian b.jpg";
+import aboutImage1 from "./AboutAssets/Mario and Adrian A.jpg";
+import "./AboutStyle.css";
 
 function About() {
     return (
-        <section className="home-section about-section">
+        <section className="home-section about-section" id="about-section-id">
             <div className="about-content-section">
                 <article className="blurb-article">
                     <h1>Little Lemon</h1>

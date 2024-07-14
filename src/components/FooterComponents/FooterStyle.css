@@ -1,0 +1,65 @@
+.footer {
+    width: 80%;
+    max-width: 1600px;
+    margin: 0 auto 20px auto;
+    display: grid;
+    justify-content: space-between;
+    grid-template-areas: "footer-logo doormat contact socials";
+    align-items: start;
+    padding: 20px 0;
+}
+
+@media (max-width: 800px) {
+    .footer {
+        width: 90%;
+        gap: 5%;
+        justify-items: center;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-areas:
+            "... footer-logo ..."
+            "doormat contact socials";
+    }
+    .footer div,
+    .footer-logo {
+        padding: 2%;
+    }
+}
+
+.footer a,
+.footer li {
+    color: #333;
+    font-weight: 500;
+}
+
+.footer div {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    text-align: left;
+}
+
+#footer-logo {
+    grid-area: footer-logo;
+}
+
+#doormat {
+    grid-area: doormat;
+}
+
+#contact {
+    grid-area: contact;
+}
+
+#socials {
+    grid-area: socials;
+}
+
+.footer h3 {
+    margin-bottom: 10px;
+}
+
+.footer-logo {
+    height: 15vh;
+}

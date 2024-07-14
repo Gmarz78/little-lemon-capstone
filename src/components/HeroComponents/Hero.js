@@ -4,7 +4,7 @@ import "./HeroStyle.css";
 
 function Hero() {
     return (
-        <section className="home-section hero-section">
+        <section className="home-section hero-section" id="hero-section-id">
             <div className="hero-content-section">
                 <div className="blurb-article">
                     <h1 className="sub-title">Little Lemon</h1>

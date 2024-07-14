@@ -1,5 +1,5 @@
 import headerLogo from "./HeaderAssets/headerLogo.png";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Header() {
     return (
@@ -15,10 +15,19 @@ function Header() {
                     <NavLink to="/booking" className={({ isActive }) => (isActive ? "nav-item-active" : "nav-item")}>
                         Booking
                     </NavLink>
-                    <a href="#about">About</a>
-                    <a href="#">Menu</a>
-                    <a href="#">Order online</a>
-                    <a href="#">Login</a>
+                    {/* eslint-disable jsx-a11y/anchor-is-valid */}
+                    <a href="#" aria-label="Mock About link">
+                        About
+                    </a>
+                    <a href="#" aria-label="Mock Menu link">
+                        Menu
+                    </a>
+                    <a href="#" aria-label="Mock Order Online link">
+                        Order online
+                    </a>
+                    <a href="#" aria-label="Mock Login link">
+                        Login
+                    </a>
                 </nav>
             </>
         </header>

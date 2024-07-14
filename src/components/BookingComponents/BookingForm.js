@@ -26,6 +26,14 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
     const [emailValid, setEmailValid] = useState(false);
     const [telNoValid, setTelNoValid] = useState(false);
 
+    const [dateTouched, setDateTouched] = useState(false);
+    const [timeTouched, setTimeTouched] = useState(false);
+    const [guestsTouched, setGuestsTouched] = useState(false);
+    const [firstNameTouched, setFirstNameTouched] = useState(false);
+    const [lastNameTouched, setLastNameTouched] = useState(false);
+    const [emailTouched, setEmailTouched] = useState(false);
+    const [telNoTouched, setTelNoTouched] = useState(false);
+
     const clearForm = () => {
         setFirstName("");
         setLastName("");
@@ -70,19 +78,34 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
         }
     };
     // Function to fetch new times when date changes
+
     const handleDateChange = async (e) => {
-        const selectedDate = new Date(e.target.value);
-        setDate(selectedDate.toISOString().split("T")[0]);
-        setDateValid(true);
-        if (dispatch) {
-            try {
-                const response = await fetchAPI(selectedDate);
-                dispatch({ type: "change_date", payload: response });
-            } catch (error) {
-                console.error("Error fetching data:", error);
+        try {
+            const selectedDate = new Date(e.target.value);
+
+            if (isNaN(selectedDate)) {
+                throw new Error("Invalid date");
             }
-        } else {
-            console.error("dispatch function is not available");
+
+            setDate(selectedDate.toISOString().split("T")[0]);
+            setDateValid(true);
+
+            if (dispatch) {
+                try {
+                    const response = await fetchAPI(selectedDate);
+                    dispatch({ type: "change_date", payload: response });
+                } catch (error) {
+                    console.error("Error fetching dates:", error);
+                }
+            } else {
+                console.error("dispatch function failed");
+            }
+        } catch (error) {
+            if (error instanceof RangeError) {
+                console.error("RangeError: Invalid time value");
+            } else {
+                console.error("Error handling date change:", error);
+            }
         }
     };
 
@@ -113,10 +136,12 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                     type="date"
                                     value={date}
                                     onChange={handleDateChange}
+                                    onBlur={() => setDateTouched(true)}
+                                    className={`input-field ${dateTouched ? (dateValid ? "valid-input" : "invalid-input") : "untouched-input"}`}
                                     id="res-date"
-                                    className={dateValid ? "valid-input" : "invalid-input"}
                                     aria-required="true"
                                 />
+                                <span className={`validation-message ${!dateValid && dateTouched ? "visible" : ""}`}>Plese enter a valid date</span>
                             </div>
                             <div className="Field" id="choose-time">
                                 <div className="field-title-icon">
@@ -128,22 +153,24 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
 
                                 <select
                                     id="res-time"
-                                    className={timeValid ? "valid-input" : "invalid-input"}
                                     value={time}
                                     onChange={(e) => {
                                         const value = e.target.value;
                                         setTime(e.target.value);
                                         setTimeValid(value !== "" ? true : false);
                                     }}
+                                    onBlur={() => setTimeTouched(true)}
+                                    className={`input-field ${timeTouched ? (timeValid ? "valid-input" : "invalid-input") : "untouched-input"}`}
                                     aria-label="Select a time"
                                     aria-required="true">
-                                    <option value="">Select a time</option> {/* Add a default blank option */}
+                                    <option value="">Select a time</option>
                                     {availableTimes.map((time, index) => (
                                         <option key={index} value={time}>
                                             {time}
                                         </option>
                                     ))}
                                 </select>
+                                <span className={`validation-message ${!timeValid && timeTouched ? "visible" : ""}`}>Please select a valid time</span>
                             </div>
                             <div className="Field" id="choose-guests">
                                 <div className="field-title-icon">
@@ -158,14 +185,16 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                     min="1"
                                     max="20"
                                     id="guests"
-                                    className={guestsValid ? "valid-input" : "invalid-input"}
                                     value={guests}
                                     onChange={(e) => {
                                         const value = e.target.value;
                                         setGuests(value);
                                         setGuestsValid(!isNaN(value) && parseInt(value) > 0 && parseInt(value) <= 20);
                                     }}
+                                    onBlur={() => setGuestsTouched(true)}
+                                    className={`input-field ${guestsTouched ? (guestsValid ? "valid-input" : "invalid-input") : "untouched-input"}`}
                                 />
+                                <span className={`validation-message ${!guestsValid && guestsTouched ? "visible" : ""}`}>Number of guests must be 1-20</span>
                             </div>
                             <div className="Field" id="choose-occasion">
                                 <div className="field-title-icon">
@@ -205,10 +234,14 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                         setFirstName(value);
                                         setFirstNameValid(/^[a-zA-Z-]*$/.test(value) && value.length > 0 ? true : false);
                                     }}
-                                    className={firstNameValid ? "valid-input" : "invalid-input"}
+                                    onBlur={() => setFirstNameTouched(true)}
+                                    className={`input-field ${firstNameTouched ? (firstNameValid ? "valid-input" : "invalid-input") : "untouched-input"}`}
                                     aria-label="Enter first name"
                                     aria-required="true"
                                 />
+                                <span className={`validation-message ${!firstNameValid && firstNameTouched ? "visible" : ""}`}>
+                                    Please enter at least one initial
+                                </span>
                             </div>
                             <div className="Field contact-field" id="last-name">
                                 <label htmlFor="lastNameInput">
@@ -223,10 +256,14 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                         setLastName(value);
                                         setLastNameValid(/^[a-zA-Z-]*$/.test(value) && value.length > 1 ? true : false);
                                     }}
-                                    className={lastNameValid ? "valid-input" : "invalid-input"}
+                                    onBlur={() => setLastNameTouched(true)}
+                                    className={`input-field ${lastNameTouched ? (lastNameValid ? "valid-input" : "invalid-input") : "untouched-input"}`}
                                     aria-label="Enter last name"
                                     aria-required="true"
                                 />
+                                <span className={`validation-message ${!lastNameValid && lastNameTouched ? "visible" : ""}`}>
+                                    Surname must contain at least two letters
+                                </span>
                             </div>
                             <div className="Field contact-field" id="email">
                                 <label htmlFor="emailInput">
@@ -241,10 +278,12 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                         setEmail(e.target.value);
                                         setEmailValid(utils.validateEmail(value) ? true : false);
                                     }}
-                                    className={emailValid ? "valid-input" : "invalid-input"}
+                                    onBlur={() => setEmailTouched(true)}
+                                    className={`input-field ${emailTouched ? (emailValid ? "valid-input" : "invalid-input") : "untouched-input"}`}
                                     aria-label="Enter email address"
                                     aria-required="true"
                                 />
+                                <span className={`validation-message ${!emailValid && emailTouched ? "visible" : ""}`}>Please enter a valid email</span>
                             </div>
                             <div className="Field contact-field" id="contact-no">
                                 <label htmlFor="telNoInput">
@@ -259,10 +298,14 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                                         setTelNo(e.target.value);
                                         setTelNoValid(utils.validatePhoneNumber(value) ? true : false);
                                     }}
-                                    className={telNoValid ? "valid-input" : "invalid-input"}
+                                    onBlur={() => setTelNoTouched(true)}
+                                    className={`input-field ${telNoTouched ? (telNoValid ? "valid-input" : "invalid-input") : "untouched-input"}`}
                                     aria-label="Enter a contact telephone number"
                                     aria-required="true"
                                 />
+                                <span className={`validation-message ${!telNoValid && telNoTouched ? "visible" : ""}`}>
+                                    Please enter a valid telephone number
+                                </span>
                             </div>
                         </section>
 

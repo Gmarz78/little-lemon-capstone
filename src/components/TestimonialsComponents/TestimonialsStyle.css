@@ -1,10 +1,11 @@
-/* Testimonials section ======================================================================================================== */
-
 .testimonials-section {
     background: #333;
-    width: 100lvw;
-    padding: 2% 0;
-    margin: 60px auto;
+    width: 100%;
+    padding: 4% 0;
+
+    @media (max-width: 1000px) {
+        padding: 6% 0;
+    }
 }
 .testimonials-content {
     display: grid;
@@ -13,7 +14,7 @@
         "testimonial-cards-area";
     width: 80%;
     max-width: 1600px;
-    margin: 2% auto;
+    margin: 4% auto;
     grid-row-gap: 5%;
 }
 
@@ -22,13 +23,16 @@
     grid-area: testimonial-cards-area;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 3%;
-    margin: auto;
+    gap: 4%;
+    margin: 5% auto;
     @media (max-width: 1000px) {
         grid-template-columns: repeat(2, 1fr);
+        justify-content: center;
+        margin-bottom: 80px;
     }
     @media (max-width: 600px) {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: 1fr;
+        gap: 3%;
     }
 }
 
@@ -46,6 +50,16 @@
     border: 1px solid #bbb;
     padding: 20px;
     box-shadow: 2px 8px 16px #000000;
+    width: 100%;
+    min-width: 120px;
+    @media (max-width: 1000px) {
+        width: 80%;
+        justify-self: center;
+    }
+    @media (max-width: 600px) {
+        width: 90%;
+        justify-self: center;
+    }
 }
 .review-text {
     overflow: hidden;
@@ -56,12 +70,19 @@
     line-clamp: 3;
     line-height: 1.5;
     max-height: calc(1.5em * 3);
+    @media (max-width: 600px) {
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        line-height: 1.2;
+        max-height: calc(1.2em * 3);
+    }
 }
 .review-stars {
     display: inline-flex;
 }
 .stars {
     font-size: 12pt;
+    display: inline-flex;
 }
 .review-stars h3 {
     margin-right: 1em;
@@ -80,4 +101,7 @@
     aspect-ratio: 1/1;
     object-fit: cover;
     border-radius: 16px;
+    @media (max-width: 600px) {
+        width: 20%;
+    }
 }
