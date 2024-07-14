@@ -1,22 +1,13 @@
-.blurb-article {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    min-width: 0;
-
-    @media (max-width: 600px) {
-        width: 100vw !important;
-        margin: auto !important;
-    }
-}
-
 .hero-section {
     background: #495e57;
     margin: auto;
     min-height: 20vh;
     color: #fff;
     padding-top: 40px;
-    margin-bottom: 80px;
+    margin-bottom: 5%;
+    @media (max-width: 600px) {
+        margin-bottom: 0%;
+    }
 }
 
 .hero-content-section {
@@ -36,7 +27,7 @@
         justify-content: center;
         align-items: center;
         width: 100vw;
-        margin: 4%;
+        margin: 2%;
     }
 }
 
@@ -59,6 +50,12 @@
 .home-button {
     width: 160px;
     height: 3em;
+    @media (max-width: 1000px) {
+        justify-self: start;
+    }
+    @media (max-width: 600px) {
+        justify-self: start;
+    }
 }
 
 #hero-reserve-button:hover {
@@ -76,12 +73,12 @@
     box-shadow: 2px 8px 16px #616578;
 
     @media (max-width: 1000px) {
-        right: 10%;
+        right: 5%;
         height: 75%;
     }
 
     @media (max-width: 800px) {
-        right: 10%;
+        right: 2%;
         height: 50%;
     }
 

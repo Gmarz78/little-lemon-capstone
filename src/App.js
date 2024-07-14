@@ -1,13 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 import { useReducer, useEffect } from "react";
 import Header from "./components/HeaderComponents/Header.js";
-import Footer from "./components/Footer";
+import Footer from "./components/FooterComponents/Footer.js";
 import Layout from "./components/Layout.js";
 import Main from "./components/Main";
 import ConfirmedBooking from "../src/components/BookingComponents/ConfirmedBooking";
 import BookingForm from "./components/BookingComponents/BookingForm.js";
 import HeaderLayout from "./components/HeaderComponents/HeaderLayout.js";
-import { fetchAPI, submitAPI } from "./API.js"; // Adjust the path as necessary
+import { fetchAPI, submitAPI } from "./API.js"; //Had to create an API js module due ot issues with the URL
 
 const initialState = { availableTimes: [] };
 
@@ -62,6 +62,7 @@ function App() {
             <Layout>
                 <Routes>
                     <Route path="/" element={<Main />} />
+
                     <Route path="/booking" element={<BookingForm availableTimes={state.availableTimes} dispatch={dispatch} submitForm={submitForm} />} />
                     <Route path="/confirmed" element={<ConfirmedBooking />} />
                 </Routes>

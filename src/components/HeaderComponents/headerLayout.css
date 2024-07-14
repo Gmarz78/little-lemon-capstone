@@ -1,19 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Markazi+Text:wght@400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&family=Karla:ital,wght@0,200..800;1,200..800&display=swap");
+
 * {
     margin: 0;
     padding: 0;
     font-family: "Karla", sans-serif;
+    box-sizing: border-box;
 }
 
 ul {
     list-style-type: none;
 }
+
 a {
-    box-sizing: border-box;
     text-decoration: none;
     padding: 4px;
 }
+
 .nav-item:hover,
 a:hover {
     text-decoration: underline;
@@ -24,7 +26,6 @@ a:hover {
 .nav-item-active {
     border-top: 2px solid #f4ce14;
     border-bottom: 2px solid #f4ce14;
-    /* border-radius: 16px; */
 }
 
 .header-container {
@@ -41,12 +42,18 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     margin: auto;
-    @media (max-width: 1000px) {
+}
+
+@media (max-width: 1000px) {
+    .header {
         justify-content: center;
         align-items: space-between;
         grid-template-areas:
             "logo"
             "nav";
+    }
+    .nav-bar {
+        gap: 1em;
     }
 }
 
@@ -56,10 +63,12 @@ a:hover {
     grid-template-columns: repeat(6, auto);
     justify-items: right;
     align-items: center;
-    gap: 2rem;
+    gap: 2em;
     margin: 4% 0;
 }
-.nav-bar a {
+
+.nav-bar a,
+.nav-item {
     color: #333;
     font-weight: 500;
 }
@@ -67,6 +76,7 @@ a:hover {
     grid-area: logo;
     align-self: center;
 }
+
 .header-logo img {
     width: 80%;
     padding: 16px;

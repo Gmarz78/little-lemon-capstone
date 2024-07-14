@@ -27,7 +27,7 @@ const highlights = [
 
 function Highlights() {
     return (
-        <section className="highlights-section">
+        <section className="highlights-section" id="highlights-section-id">
             <h2 className="lead-text" id="highlights-title">
                 This weeks specials!
             </h2>

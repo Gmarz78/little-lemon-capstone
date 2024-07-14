@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { formatDate, formatTime } from "../utils";
 import CelebrateImage from "./BookingAssets/Confetti.svg";
 import "./bookingStyle.css";
@@ -6,6 +7,10 @@ import "./bookingStyle.css";
 function ConfirmedBooking() {
     const location = useLocation();
     const booking = location.state?.booking;
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate("/");
+    };
 
     return (
         <div className="form-section">
@@ -16,6 +21,8 @@ function ConfirmedBooking() {
                     </h2>
                     <img className="booking-confirmed-icon" src={CelebrateImage} alt="Confetti"></img>
                 </div>
+                <hr />
+                <br />
 
                 {booking ? (
                     <>
@@ -26,7 +33,7 @@ function ConfirmedBooking() {
                                     {" "}
                                     {booking.firstName} {booking.lastName}.
                                 </strong>{" "}
-                                We have reserved a table for you for <strong>{booking.guests}</strong> guests, and listed the occasion type as{" "}
+                                We've reserved a table for you for <strong>{booking.guests}</strong> guests, and marked the occasion as{" "}
                                 <strong>{booking.occasion}</strong>.
                             </p>
                         </div>
@@ -36,6 +43,7 @@ function ConfirmedBooking() {
                                 and we hope you enjoy your visit!
                             </p>
                         </div>
+
                         <div className="confirmed-section" id="email-tel-id">
                             <p>
                                 For any reminders, or if we need to contact you, we will email you at <strong>{booking.email}</strong> or call you on{" "}
@@ -46,6 +54,11 @@ function ConfirmedBooking() {
                 ) : (
                     <p>No booking details available.</p>
                 )}
+                <hr />
+                <br />
+                <button type="submit" className="submitButton" id="done-button" onClick={handleClick}>
+                    Done
+                </button>
             </div>
         </div>
     );

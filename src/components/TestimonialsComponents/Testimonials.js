@@ -38,7 +38,7 @@ const testimonials = [
 ];
 function Testimonials() {
     return (
-        <section className="testimonials-section">
+        <section className="testimonials-section" id="testimonials-section-id">
             <div className="testimonials-content">
                 <h2 className="testimonials-title">Testimonials</h2>
                 <div className="testimonials-card-container">
